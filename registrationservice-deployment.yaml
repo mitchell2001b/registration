@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registrationservice-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registrationservice
+  template:
+    metadata:
+      labels:
+        app: registrationservice
+    spec:
+      containers:
+        - name: registrationservice
+          image: ghcr.io/mitchell2001b/registration:main
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: registration-db-config
+          resources:
+            requests:
+              cpu: "50m"
+            limits:
+              cpu: "100m"
+          imagePullPolicy: Always
+      imagePullSecrets:
+        - name: ghcr-secret

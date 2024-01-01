@@ -20,7 +20,7 @@ public class KafkaConfiguration
     {
         return TopicBuilder.name(topicName)
                 .partitions(1)   // Set the number of partitions as needed
-                .replicas(1)
+                .replicas(3)
                 .build();
     }
 
@@ -29,7 +29,7 @@ public class KafkaConfiguration
     {
         return TopicBuilder.name(topicNameUserDeletion)
                 .partitions(1)   // Set the number of partitions as needed
-                .replicas(1)
+                .replicas(3)
                 .build();
     }
 }
