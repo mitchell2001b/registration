@@ -1,1 +1,15 @@
 D:\projecten\semester6individueel\registration\src\main\java\com\example\registration\RegistrationserviceApplication.java
+D:\projecten\semester6individueel\registration\src\main\java\com\example\registration\Account\AccountService.java
+D:\projecten\semester6individueel\registration\src\main\java\com\example\registration\Configuration\KafkaConfiguration.java
+D:\projecten\semester6individueel\registration\src\main\java\com\example\registration\Account\Account.java
+D:\projecten\semester6individueel\registration\src\main\java\com\example\registration\Account\AccountController.java
+D:\projecten\semester6individueel\registration\src\main\java\com\example\registration\dtos\AccountDto.java
+D:\projecten\semester6individueel\registration\src\main\java\com\example\registration\dtos\AccountgdprDto.java
+D:\projecten\semester6individueel\registration\src\main\java\com\example\registration\Events\UserDeletedEvent.java
+D:\projecten\semester6individueel\registration\src\main\java\com\example\registration\AccountRole\AccountRoleService.java
+D:\projecten\semester6individueel\registration\src\main\java\com\example\registration\repositories\IAccountRepository.java
+D:\projecten\semester6individueel\registration\src\main\java\com\example\registration\kafka\RegistrationProducer.java
+D:\projecten\semester6individueel\registration\src\main\java\com\example\registration\AccountRole\AccountRole.java
+D:\projecten\semester6individueel\registration\src\main\java\com\example\registration\repositories\IAccountRoleRepository.java
+D:\projecten\semester6individueel\registration\src\main\java\com\example\registration\Events\UserCreatedEvent.java
+D:\projecten\semester6individueel\registration\src\main\java\com\example\registration\dtos\AccountRoleDto.java
