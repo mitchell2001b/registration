@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -29,13 +32,21 @@ public class AccountService
     }
     public Account AddUser(AccountDto account)
     {
-        AccountRole userRole = repoAccountRole.findRoleByName("user");
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        String hashedPassword = encoder.encode(account.getPassWord());
+        try
+        {
+            AccountRole userRole = repoAccountRole.findRoleByName("user");
+            PasswordEncoder encoder = new BCryptPasswordEncoder();
+            String hashedPassword = encoder.encode(account.getPassWord());
 
-        LOGGER.info(hashedPassword, " de hash");
-        Account accountToInsert = new Account(account.getDateOfBirth(), hashedPassword, account.getEmail(), userRole);
-        this.repoAccount.save(accountToInsert);
+            LOGGER.info(hashedPassword, " de hash");
+            Account accountToInsert = new Account(account.getDateOfBirth(), hashedPassword, account.getEmail(), userRole);
+            this.repoAccount.save(accountToInsert);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+
 
         return repoAccount.findLastCreatedAccount();
     }
@@ -64,6 +75,24 @@ public class AccountService
 
         }
 
+    }
+
+    public void CreateTestAdmin()
+    {
+        try
+        {
+            AccountRole userRole = repoAccountRole.findRoleByName("admin");
+            AccountDto testAdmin = new AccountDto("admin", LocalDate.now(), "admin@gmail.com");
+            PasswordEncoder encoder = new BCryptPasswordEncoder();
+            String hashedPassword = encoder.encode(testAdmin.getPassWord());
+
+            Account accountToInsert = new Account(testAdmin.getDateOfBirth(), hashedPassword, testAdmin.getEmail(), userRole);
+            this.repoAccount.save(accountToInsert);
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     public Optional<Account> SelectAccountById(Long id)

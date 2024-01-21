@@ -113,14 +113,6 @@ public class AccountController {
         return "dit is een test bericht";
     }
 
-    @GetMapping(value = "/testcall2")
-    public String ClearTopic()
-    {
-        UserDeletedEvent userDeletedEvent = new UserDeletedEvent(1L, "test@gmail.com", new Date());
-        registrationProducer.SendMessageUserDeletion(userDeletedEvent);
-        //clearTopicService.clearTopic(TopicName);
-        return "Topic cleared";
-    }
 
     @GetMapping(value = "/dummyroles")
     public String SetupDummyRoles()
@@ -128,6 +120,7 @@ public class AccountController {
         try
         {
             service.CreateRoles();
+            service.CreateTestAdmin();
         }
         catch (Exception exception)
         {
