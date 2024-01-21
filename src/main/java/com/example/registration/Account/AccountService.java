@@ -1,7 +1,9 @@
 package com.example.registration.Account;
 
 import com.example.registration.AccountRole.AccountRole;
+import com.example.registration.Events.UserCreatedEvent;
 import com.example.registration.dtos.AccountDto;
+import com.example.registration.kafka.RegistrationProducer;
 import com.example.registration.repositories.IAccountRepository;
 import com.example.registration.repositories.IAccountRoleRepository;
 import jakarta.transaction.Transactional;
@@ -22,13 +24,16 @@ public class AccountService
     private IAccountRepository repoAccount;
     private IAccountRoleRepository repoAccountRole;
 
+    private RegistrationProducer producer;
+
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountService.class);
 
     @Autowired
-    public AccountService(IAccountRepository accountRepo, IAccountRoleRepository accountRoleRepository) {
+    public AccountService(IAccountRepository accountRepo, IAccountRoleRepository accountRoleRepository, RegistrationProducer registrationProducer) {
         this.repoAccount = accountRepo;
         this.repoAccountRole = accountRoleRepository;
+        this.producer = registrationProducer;
     }
     public Account AddUser(AccountDto account)
     {
@@ -88,6 +93,10 @@ public class AccountService
 
             Account accountToInsert = new Account(testAdmin.getDateOfBirth(), hashedPassword, testAdmin.getEmail(), userRole);
             this.repoAccount.save(accountToInsert);
+
+            Account account = repoAccount.findLastCreatedAccount();
+            UserCreatedEvent event = new UserCreatedEvent(account.GetUserId(), account.GetPassWord(), account.GetDateOfBirth(), account.GetEmail(), account.GetRole().getId(), account.GetRole().getName(), LocalDate.now());
+            producer.SendMessage(event);
         }
         catch (Exception e)
         {
